@@ -144,7 +144,7 @@ async function heartbeat() {
 
   //??
   // if (!sentLogFiles) {
-  //   await sendLogFiles("appliance", "iipzy-pi");
+  //   await sendLogFiles("appliance", "iipzy-core");
   //   sentLogFiles = true;
   // }
 

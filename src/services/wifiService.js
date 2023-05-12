@@ -41,7 +41,7 @@ Question: Will Lan take over from Wifi when lan cable is plugged back in, while 
 Answer: Yes - lan will take over while wifi is active.
 
 Solution to determining which interface is active: Call network.get_private_ip once a minute.  
-	If address changes, restart iipzy-pi.  
+	If address changes, restart iipzy-core.  
 	If address goes to null ignore.
 	sentinel-admin and updater will follow clientToken change.
 */

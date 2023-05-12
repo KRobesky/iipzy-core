@@ -8,7 +8,7 @@ const Defs = require("iipzy-shared/src/defs");
 const { log, logInit, setLogLevel } = require("iipzy-shared/src/utils/logFile");
 const userDataPath = "/etc/iipzy";
 const logPath = process.platform === "win32" ? "c:/temp/" : "/var/log/iipzy";
-logInit(logPath, "iipzy-pi");
+logInit(logPath, "iipzy-core");
 const { ConfigFile } = require("iipzy-shared/src/utils/configFile");
 const http = require("iipzy-shared/src/services/httpService");
 const { sameSubnet } = require("iipzy-shared/src/utils/networkInfo");

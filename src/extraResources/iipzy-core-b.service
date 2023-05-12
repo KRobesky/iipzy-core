@@ -1,17 +1,17 @@
 [Unit]
-Description=Node.js iipzy-pi 
+Description=Node.js iipzy-core
 
 [Service]
-ExecStart=/usr/bin/node /home/pi/iipzy-service-b/iipzy-pi/src/index.js
+ExecStart=/usr/bin/node /home/pi/iipzy-service-b/iipzy-core/src/index.js
 # Required on some systems
-#WorkingDirectory=/home/pi/iipzy-service-b/iipzy-pi
+#WorkingDirectory=/home/pi/iipzy-service-b/iipzy-core
 Restart=always
 # Restart service after 10 seconds if node service crashes
 RestartSec=10
 # Output to syslog
 StandardOutput=syslog
 StandardError=syslog
-SyslogIdentifier=iipzy-pi
+SyslogIdentifier=iipzy-core
 #User=<alternate user>
 User=pi
 #Group=<alternate group>

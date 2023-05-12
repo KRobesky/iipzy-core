@@ -307,7 +307,7 @@ router.post("/", async (req, res) => {
     }
 
     if (settings.hasOwnProperty("sendLogs")) {
-      await sendLogFiles("appliance", "iipzy-pi");
+      await sendLogFiles("appliance", "iipzy-core");
       await sendLogFiles("updater", "iipzy-updater");
     }
 

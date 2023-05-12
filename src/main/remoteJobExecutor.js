@@ -23,7 +23,7 @@ class RemoteJobExecutor {
     log("RemoteJobExecutor.run", "rjex", "info");
 
     try {
-      this.exec = spawn("tail", ["-F", "/var/log/iipzy/iipzy-pi.log"]);
+      this.exec = spawn("tail", ["-F", "/var/log/iipzy/iipzy-core.log"]);
     } catch (ex) {
       log("(Exception) RemoteJobExecutor.run: ex = " + ex, "rjex", "error");
       return;
