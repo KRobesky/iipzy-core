@@ -366,7 +366,7 @@ class RoundRobinDB {
     const data = '\n' + JSON.stringify({ id: + id, linkId: this.linkId, data: joDataToWrite });
     
     if (data.length + 1 > this.entrySize) {
-      const msg = "roundRobinDB: data longer than entry size";
+      const msg = "roundRobinDB: data size (" + data.length + ") longer than entry size (" + this.entrySize + ")";
       console.error(msg);
       throw new Error(msg);
     }
