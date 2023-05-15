@@ -214,31 +214,9 @@ async function setRunACM() {
   //let tc_service = "";
   //{
   try {  
-    const { curServiceSuffix } = await getServiceSuffixes("iipzy-tc");
-    const tc_service = "iipzy-tc-" + curServiceSuffix;
+    //const { curServiceSuffix } = await getServiceSuffixes("iipzy-tc");
+    const tc_service = "iipzy-tc-" + await getServiceSuffixes("iipzy-tc").curServiceSuffix;
     log("setRunACM: tc-service = " + tc_service, "sets", "info");
-    /*
-    getServiceSuffixes
-    const { stderr, stdout } = await spawnAsync("ps", ["-Af"]);
-    if (stderr) {
-      log("(Error) setRunACM: stderr = " + stderr, "sets", "error");
-      return;
-    }
-    const ps = stdout.split('\n');
-    for (let i = 0; i < ps.length; i++) {
-      const line = ps[i];
-      if (line.includes("iipzy-tc-a")) {
-        tc_service = "iipzy-tc-a";
-        break;
-      } else if (line.includes("iipzy-tc-b")) {
-        tc_service = "iipzy-tc-b";
-        break;
-      }
-    }
-    log("setRunACM: tc-service = " + tc_service, "sets", "info");
-    if (!tc_service) return;
-    */
-  //}
     {
       // stop tc service
       const { stderr, stdout } = await spawnAsync("systemctl", ["stop", tc_service]);
