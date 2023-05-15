@@ -17,7 +17,6 @@ const {
 } = require("iipzy-shared/src/utils/fileIO");
 const Ping = require("iipzy-shared/src/utils/ping");
 const { spawnAsync } = require("iipzy-shared/src/utils/spawnAsync");
-const Ping = require("iipzy-shared/src/utils/ping");
 const { getServiceSuffixes } = require("iipzy-shared/src/utils/utils");
 
 const heartbeat = require("../core/main/heartbeat");
