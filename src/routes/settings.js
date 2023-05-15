@@ -214,8 +214,8 @@ async function setRunACM() {
   //let tc_service = "";
   //{
   try {  
-    //const { curServiceSuffix } = await getServiceSuffixes("iipzy-tc");
-    const tc_service = "iipzy-tc-" + await getServiceSuffixes("iipzy-tc").curServiceSuffix;
+    const { curServiceSuffix } = await getServiceSuffixes("iipzy-tc");
+    const tc_service = "iipzy-tc-" + curServiceSuffix;
     log("setRunACM: tc-service = " + tc_service, "sets", "info");
     {
       // stop tc service
