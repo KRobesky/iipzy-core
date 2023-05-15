@@ -213,8 +213,10 @@ async function setRunACM() {
   log("setRunACM", "sets", "info");
   //let tc_service = "";
   //{
-  const tc_service = "iipzy-tc-" + await getServiceSuffixes("iipzy-tc").curServiceSuffix;
-  log("setRunACM: tc-service = " + tc_service, "sets", "info");
+  try {  
+    const { curServiceSuffix } = await getServiceSuffixes("iipzy-tc");
+    const tc_service = "iipzy-tc-" + curServiceSuffix;
+    log("setRunACM: tc-service = " + tc_service, "sets", "info");
     /*
     getServiceSuffixes
     const { stderr, stdout } = await spawnAsync("ps", ["-Af"]);
@@ -237,29 +239,32 @@ async function setRunACM() {
     if (!tc_service) return;
     */
   //}
-  {
-    // stop tc service
-    const { stderr, stdout } = await spawnAsync("systemctl", ["stop", tc_service]);
-    if (stderr) {
-      log("(Error) setRunACM: stderr = " + stderr, "sets", "error");
-      return;
+    {
+      // stop tc service
+      const { stderr, stdout } = await spawnAsync("systemctl", ["stop", tc_service]);
+      if (stderr) {
+        log("(Error) setRunACM: stderr = " + stderr, "sets", "error");
+        return;
+      }
     }
-  }
-  {
-    // delete bandwidth files
-    const { stderr, stdout } = await spawnAsync("rm", ["-f", "/etc/iipzy/bandwidth*"]);
-    if (stderr) {
-      log("(Error) setRunACM: stderr = " + stderr, "sets", "error");
-      return;
+    {
+      // delete bandwidth files
+      const { stderr, stdout } = await spawnAsync("rm", ["-f", "/etc/iipzy/bandwidth*"]);
+      if (stderr) {
+        log("(Error) setRunACM: stderr = " + stderr, "sets", "error");
+        return;
+      }
     }
-  }
-  {
-    // start tc service
-    const { stderr, stdout } = await spawnAsync("systemctl", ["start", tc_service]);
-    if (stderr) {
-      log("(Error) setRunACM: stderr = " + stderr, "sets", "error");
-      return;
+    {
+      // start tc service
+      const { stderr, stdout } = await spawnAsync("systemctl", ["start", tc_service]);
+      if (stderr) {
+        log("(Error) setRunACM: stderr = " + stderr, "sets", "error");
+        return;
+      }
     }
+  } catch (ex) {
+    log("(Exception) setRunACM: " + ex, "sets", "error");
   }
 }
 
