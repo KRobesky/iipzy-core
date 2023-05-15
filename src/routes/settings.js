@@ -17,6 +17,8 @@ const {
 } = require("iipzy-shared/src/utils/fileIO");
 const Ping = require("iipzy-shared/src/utils/ping");
 const { spawnAsync } = require("iipzy-shared/src/utils/spawnAsync");
+const Ping = require("iipzy-shared/src/utils/ping");
+const { getServiceSuffixes } = require("iipzy-shared/src/utils/utils");
 
 const heartbeat = require("../core/main/heartbeat");
 
@@ -208,6 +210,60 @@ async function setRebootAppliance() {
   }, 5 * 1000);
 }
 
+async function setRunACM() {
+  log("setRunACM", "sets", "info");
+  //let tc_service = "";
+  //{
+  const tc_service = "iipzy-tc-" + await getServiceSuffixes("iipzy-tc").curServiceSuffix;
+  log("setRunACM: tc-service = " + tc_service, "sets", "info");
+    /*
+    getServiceSuffixes
+    const { stderr, stdout } = await spawnAsync("ps", ["-Af"]);
+    if (stderr) {
+      log("(Error) setRunACM: stderr = " + stderr, "sets", "error");
+      return;
+    }
+    const ps = stdout.split('\n');
+    for (let i = 0; i < ps.length; i++) {
+      const line = ps[i];
+      if (line.includes("iipzy-tc-a")) {
+        tc_service = "iipzy-tc-a";
+        break;
+      } else if (line.includes("iipzy-tc-b")) {
+        tc_service = "iipzy-tc-b";
+        break;
+      }
+    }
+    log("setRunACM: tc-service = " + tc_service, "sets", "info");
+    if (!tc_service) return;
+    */
+  //}
+  {
+    // stop tc service
+    const { stderr, stdout } = await spawnAsync("systemctl", ["stop", tc_service]);
+    if (stderr) {
+      log("(Error) setRunACM: stderr = " + stderr, "sets", "error");
+      return;
+    }
+  }
+  {
+    // delete bandwidth files
+    const { stderr, stdout } = await spawnAsync("rm", ["-f", "/etc/iipzy/bandwidth*"]);
+    if (stderr) {
+      log("(Error) setRunACM: stderr = " + stderr, "sets", "error");
+      return;
+    }
+  }
+  {
+    // start tc service
+    const { stderr, stdout } = await spawnAsync("systemctl", ["start", tc_service]);
+    if (stderr) {
+      log("(Error) setRunACM: stderr = " + stderr, "sets", "error");
+      return;
+    }
+  }
+}
+
 async function setShutdownAppliance() {
   log("shutting down appliance in 5 seconds", "sets", "info");
   setTimeout(() => {
@@ -295,6 +351,10 @@ router.post("/", async (req, res) => {
       await setRebootAppliance();
     }
     
+    if (settings.hasOwnProperty("runACM")) {
+      await setRunACM();
+    }
+
     if (settings.hasOwnProperty("shutdownAppliance")) {
       await setShutdownAppliance();
     }
