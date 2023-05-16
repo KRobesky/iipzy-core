@@ -227,11 +227,10 @@ async function setRunACM() {
     }
     {
       // delete bandwidth files
-      const { stderr, stdout } = await spawnAsync("rm", ["-f", "/etc/iipzy/bandwidth*"]);
-      if (stderr) {
-        log("(Error) setRunACM: stderr = " + stderr, "sets", "error");
-        return;
-      }
+      await spawnAsync("rm", ["-f", "/etc/iipzy/bandwidth_receive.json"]);
+      await spawnAsync("rm", ["-f", "/etc/iipzy/bandwidth_receive.json.bak"]);
+      await spawnAsync("rm", ["-f", "/etc/iipzy/bandwidth_transmit.json"]);
+      await spawnAsync("rm", ["-f", "/etc/iipzy/bandwidth_transmit.json.bak"]);
     }
     {
       // start tc service
