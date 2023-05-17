@@ -12,7 +12,7 @@ logInit(logPath, "iipzy-core");
 const { ConfigFile } = require("iipzy-shared/src/utils/configFile");
 const http = require("iipzy-shared/src/services/httpService");
 const { sameSubnet } = require("iipzy-shared/src/utils/networkInfo");
-const periodicHandler = require("iipzy-shared/src/utils/periodicHandler");
+//const periodicHandler = require("iipzy-shared/src/utils/periodicHandler");
 const platformInfo = require("iipzy-shared/src/utils/platformInfo");
 const { changeTimezoneIfNecessary } = require("iipzy-shared/src/utils/timezone");
 const { processErrorHandler, sleep } = require("iipzy-shared/src/utils/utils");
@@ -168,8 +168,8 @@ async function main() {
   });
 
   actionHandler.init(context);
-  periodicHandler.init(context);
-  await heartbeat.init(context, actionHandler.actionCB, periodicHandler.periodicCB);
+  //periodicHandler.init(context);
+  await heartbeat.init(context, actionHandler.actionCB); //, periodicHandler.periodicCB);
   await pingPlot.init(context);
   await throughputTest.init(context);
   scheduler.init(context);

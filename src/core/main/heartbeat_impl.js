@@ -29,11 +29,11 @@ let doSimulateOffline = false;
 let actionCB = null;
 let actionAcks = [];
 
-let periodicCB = null;
+//let periodicCB = null;
 
 let inHeartbeat = 0;
 
-async function init(context, _actionCB, _periodicCB) {
+async function init(context, _actionCB) { //}, _periodicCB) {
   log(">>>heartbeat.init", "htbt", "info");
 
   const {
@@ -60,7 +60,7 @@ async function init(context, _actionCB, _periodicCB) {
     _standAlone && clientType === "pc" ? Defs.clientMode_pcOnly : Defs.clientMode_sentinel;
 
   actionCB = _actionCB;
-  periodicCB = _periodicCB;
+  //periodicCB = _periodicCB;
 
   if (clientType === "pc") {
     ipcMain = require("electron").ipcMain;
@@ -164,7 +164,7 @@ async function heartbeat() {
   //   "verbose"
   // );
 
-  const periodicData = periodicCB ? periodicCB() : null;
+  //const periodicData = periodicCB ? periodicCB() : null;
 
   // log(
   //   "heartbeat: before post - periodicData = " + JSON.stringify(periodicData),
@@ -178,7 +178,7 @@ async function heartbeat() {
     clientMode,
     localIPAddress,
     actionAcks,
-    periodicData
+    //periodicData
   };
 
   log("heartbeat: before post - reqData = " + JSON.stringify(reqData, null, 2), "htbt", "info");
