@@ -183,7 +183,11 @@ async function heartbeat() {
 
   log("heartbeat: before post - reqData = " + JSON.stringify(reqData, null, 2), "htbt", "info");
 
-  const { data, status } = await http.post("/client/heartbeat", reqData);
+  const options = {
+    timeout: (10*1000),
+  };
+
+  const { data, status } = await http.post("/client/heartbeat", reqData, options);
   actionAcks = [];
 
   log("heartbeat: status = " + status, "htbt", "verbose");
