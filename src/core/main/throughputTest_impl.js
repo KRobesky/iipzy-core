@@ -272,6 +272,9 @@ function tickDataFuncDetermineNominalLatency(jo) {
   if (testState) {
     if (!jo) return;
 
+    numTicksNominalLatency = jo.numTicks;
+    tickNumNominalLatency = jo.tickNum;
+
     ipcSendIfEnabled(Defs.ipcTickStatusNominalLatency, {
       numTicks: jo.numTicks,
       tickNum: jo.tickNum
@@ -292,6 +295,8 @@ function pingDoneFuncDetermineNominalLatency(code, jo) {
 
   if (testState) {
     if (!jo) return;
+
+    nominalLatencyMillis = jo.avgMillis;
 
     ipcSendIfEnabled(Defs.ipcNominalLatencyStatusFinal, jo.avgMillis);
   }
@@ -334,6 +339,9 @@ function tickDataFuncDownloadThroughput(jo) {
   if (testState) {
     if (!jo) return;
 
+    numTicksIperf3Down = jo.numTicks;
+    tickNumIperf3Down = jo.tickNum;
+
     ipcSendIfEnabled(Defs.ipcTickStatusIperf3Down, {
       numTicks: jo.numTicks,
       tickNum: jo.tickNum
@@ -355,7 +363,9 @@ function pingDoneFuncDownloadThroughput(code, jo) {
   if (testState) {
     if (!jo) return;
 
-    ipcSendIfEnabled(Defs.ipcBloatLatencyStatusIperf3DownFinal, jo.avgMillis - nominalLatencyMillis);
+    downloadBloatMillis = jo.avgMillis - nominalLatencyMillis;
+
+    ipcSendIfEnabled(Defs.ipcBloatLatencyStatusIperf3DownFinal, downloadBloatMillis);
   }
 }
 
@@ -483,6 +493,9 @@ function tickDataFuncUploadThroughput(jo) {
   if (testState) {
     if (!jo) return;
 
+    numTicksIperf3Up = jo.numTicks;
+    tickNumIperf3Up = jo.tickNum;
+
     ipcSendIfEnabled(Defs.ipcTickStatusIperf3Up, {
       numTicks: jo.numTicks,
       tickNum: jo.tickNum
@@ -504,7 +517,9 @@ function pingDoneFuncUploadThroughput(code, jo) {
   if (testState) {
     if (!jo) return;
 
-    ipcSendIfEnabled(Defs.ipcBloatLatencyStatusIperf3UpFinal, jo.avgMillis - nominalLatencyMillis);
+    uploadBloatMillis = jo.avgMillis - nominalLatencyMillis;
+
+    ipcSendIfEnabled(Defs.ipcBloatLatencyStatusIperf3UpFinal, uploadBloatMillis);
   }
 }
 
