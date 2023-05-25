@@ -481,7 +481,7 @@ class RoundRobinDB {
     let joRet = {
       maxEntries: this.maxEntries,
       numEntries: this.getNumEntries(),
-      oldest:     (startNumEntriesBack === this.getNumEntries()),
+      oldest:     (startNumEntriesBack >= this.getNumEntries()),
       newest:     (startNumEntriesBack === readCount),
       indexFirst: startIndex1,
       highestId:  (this.nextId - 1),
