@@ -582,12 +582,16 @@ async function pingDataFunc(joData) {
 
 async function filter(jo, numSamples) {
   let joRet = {};
-
-  // log("--------------------filter--------------------");
-  // log("maxEntries = " + jo.maxEntries);
-  // log("numEntries = " + jo.numEntries);
-  // log("oldest = " + jo.oldest);
-  // log("newest = " + jo.newest);
+  let jaRet = [];
+  /*
+  log("--------------------filter--------------------");
+  log("jo.length = " + jo.length);
+  log("numSamples = " + numSamples);
+  log("maxEntries = " + jo.maxEntries);
+  log("numEntries = " + jo.numEntries);
+  log("oldest = " + jo.oldest);
+  log("newest = " + jo.newest);
+  */
 
   try {
     if (numSamples > 1) {
@@ -598,7 +602,7 @@ async function filter(jo, numSamples) {
         this.oldest = jo["oldest"];
         const ja = jo["entries"];
       */
-      let jaRet = [];
+
       const ja = jo.entries;
 
       /*
@@ -632,11 +636,12 @@ async function filter(jo, numSamples) {
         const { id, linkId, data } = ja[i];
         //if (i === center) log("-----center = " + JSON.stringify(ja[i]));
         // NB: handle empty rows.
+        //log("...filter = data = " + JSON.stringify(data));
         const { 
           timeStamp,
           flag,
           mark,
-          timeMillism,
+          timeMillis,
           rx_rate_bits,
           tx_rate_bits,
           rx_rate_dns_bits,
@@ -680,7 +685,7 @@ async function filter(jo, numSamples) {
               timeStamp: sampleTimeStamp,
               flag,
               mark,
-              timeMillism,
+              timeMillis,
               rx_rate_bits,
               tx_rate_bits,
               rx_rate_dns_bits,
@@ -715,7 +720,7 @@ async function filter(jo, numSamples) {
       joRet.prevDBLinkId = jo.prevDBLinkId;
       joRet.nextDBLinkId = jo.nextDBLinkId;
       joRet.entries = jaRet;
-      log("-------filtered- num entries = " + jaRet.length);
+      //log("-------filtered- num entries = " + jaRet.length);
     } else {
       joRet = jo;
     }
@@ -723,6 +728,11 @@ async function filter(jo, numSamples) {
     log("...filter: leftPos = " + leftPos, "plot", "info");
   } catch (err) {
     log("(Exception) filter: " + err, "plot", "error");
+    if (numSamples > 1) {
+      joRet.entries = jaRet;
+    } else {
+      joRet = jo;
+    }
   }
 
   return joRet;
