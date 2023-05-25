@@ -634,6 +634,7 @@ async function filter(jo, numSamples) {
         // NB: handle empty rows.
         const { 
           timeStamp,
+          flag,
           mark,
           timeMillism,
           rx_rate_bits,
@@ -643,15 +644,13 @@ async function filter(jo, numSamples) {
           tx_rate_dns_bits,
           tx_rate_rt_bits,
           temp_celsius,
-          cpu_utlz_user,  
-          cpu_utlz_nice,  
-          cpu_utlz_system,
-          cpu_utlz_iowait,
-          cpu_utlz_steal,
+          cpu_utlz_pct,  
+          mem_use_pct,
+          stg_use_pct,  
           rx_bw_peak_bits,
           rx_bw_quality_bits,
           tx_bw_peak_bits,
-          tx_bw_quality_bits         
+          tx_bw_quality_bits,       
         } = data.timeMillis !== undefined ? data : dataPrev;
         if (data.timeMillis !== undefined) {
           //log("---filter---saving prev");
@@ -679,6 +678,7 @@ async function filter(jo, numSamples) {
             linkId: sampleLinkId,
             data: {
               timeStamp: sampleTimeStamp,
+              flag,
               mark,
               timeMillism,
               rx_rate_bits,
@@ -688,11 +688,9 @@ async function filter(jo, numSamples) {
               tx_rate_dns_bits,
               tx_rate_rt_bits,
               temp_celsius,
-              cpu_utlz_user,  
-              cpu_utlz_nice,  
-              cpu_utlz_system,
-              cpu_utlz_iowait,
-              cpu_utlz_steal,
+              cpu_utlz_pct,  
+              mem_use_pct,
+              stg_use_pct,  
               rx_bw_peak_bits,
               rx_bw_quality_bits,
               tx_bw_peak_bits,
